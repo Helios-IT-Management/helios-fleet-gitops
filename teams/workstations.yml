@@ -76,41 +76,29 @@ software:
   fleet_maintained_apps:
   - categories:
     - Browsers
-    install_script:
-      path: ../lib/macos/scripts/google-chrome-darwin-install
     self_service: true
     setup_experience: true
     slug: google-chrome/darwin
   - categories:
     - Communication
-    install_script:
-      path: ../lib/macos/scripts/slack-darwin-install
     self_service: true
     setup_experience: true
     slug: slack/darwin
   - categories:
     - Developer tools
-    install_script:
-      path: ../lib/macos/scripts/cursor-darwin-install
     self_service: true
     slug: cursor/darwin
   - categories:
     - Developer tools
-    install_script:
-      path: ../lib/macos/scripts/linear-darwin-install
     self_service: true
     slug: linear-linear/darwin
   - categories:
     - Developer tools
-    install_script:
-      path: ../lib/macos/scripts/postman-darwin-install
     self_service: true
     setup_experience: true
     slug: postman/darwin
   - categories:
     - Productivity
-    install_script:
-      path: ../lib/macos/scripts/1password-darwin-install
     self_service: true
     setup_experience: true
     slug: 1password/darwin
