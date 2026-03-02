@@ -6,8 +6,6 @@ on:
       - main
   pull_request:
   workflow_dispatch:
-  schedule:
-  - cron: '0 6 * * *'
 
 concurrency:
   group: ${{ github.workflow }}
@@ -39,4 +37,3 @@ jobs:
           FLEET_MDM_SSO_METADATA: ${{ secrets.FLEET_MDM_SSO_METADATA }}
           AWS_ACCESS_KEY_ID: ${{ secrets.FLEET_S3_SOFTWARE_INSTALLERS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.FLEET_S3_SOFTWARE_INSTALLERS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: us-central1

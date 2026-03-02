@@ -55,7 +55,3 @@ fi
 
 # Real run
 $FLEETCTL gitops "${args[@]}"
-
-curl -s -X POST https://fleet.heliosintel.ai/api/v1/fleet/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"fleetapi@heliosintel.ai","password":"pjGHQy.QbM-kqbj4KcX2VCE*w2vn"}' | python3 -m json.tool

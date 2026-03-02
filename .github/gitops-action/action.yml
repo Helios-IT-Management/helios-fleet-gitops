@@ -56,4 +56,6 @@ runs:
       env:
         FLEET_DRY_RUN_ONLY: ${{ inputs.dry-run-only }}
         FLEET_DELETE_OTHER_TEAMS: ${{ inputs.delete-other-teams }}
+        AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
       run: ./gitops.sh
