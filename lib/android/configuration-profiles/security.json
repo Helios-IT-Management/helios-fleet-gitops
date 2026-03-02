@@ -1,0 +1,15 @@
+{
+  "passwordPolicies": [
+    {
+      "passwordMinimumLength": 6,
+      "passwordQuality": "NUMERIC",
+      "passwordScope": "SCOPE_DEVICE"
+    }
+  ],
+  "maximumTimeToLock": 300000,
+  "systemUpdate": {
+    "type": "WINDOWED",
+    "startMinutes": 0,
+    "endMinutes": 240
+  }
+}

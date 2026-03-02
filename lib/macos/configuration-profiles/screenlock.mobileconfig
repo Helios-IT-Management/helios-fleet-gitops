@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadType</key>
+			<string>com.apple.screensaver</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>PayloadIdentifier</key>
+			<string>ai.heliosintel.screenlock.screensaver</string>
+			<key>PayloadUUID</key>
+			<string>3A4B5C6D-7E8F-9012-ABCD-EF3456789012</string>
+			<key>PayloadDisplayName</key>
+			<string>Screen Lock</string>
+			<key>askForPassword</key>
+			<integer>1</integer>
+			<key>askForPasswordDelay</key>
+			<integer>0</integer>
+			<key>idleTime</key>
+			<integer>300</integer>
+		</dict>
+	</array>
+	<key>PayloadDisplayName</key>
+	<string>Screen Lock</string>
+	<key>PayloadIdentifier</key>
+	<string>ai.heliosintel.screenlock</string>
+	<key>PayloadRemovalDisallowed</key>
+	<true/>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>4B5C6D7E-8F90-1234-BCDE-F45678901234</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

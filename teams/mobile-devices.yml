@@ -1,0 +1,18 @@
+name: Mobile devices
+policies:
+queries:
+agent_options:
+controls:
+  ios_updates:
+    deadline: "2026-04-01"
+    minimum_version: "18.3"
+  macos_settings:
+    custom_settings:
+      - path: ../lib/ios/configuration-profiles/passcode.mobileconfig
+  android_settings:
+    custom_settings:
+      - path: ../lib/android/configuration-profiles/security.json
+software:
+team_settings:
+  secrets:
+  - secret: $FLEET_MOBILE_DEVICES_ENROLL_SECRET
