@@ -125,7 +125,8 @@ software:
     self_service: true
     slug: stats/darwin
   packages:
-  - hash_sha256: 8fb2a90cdda97e9ea14d65751ff46d8e1a4dda1b37986078443ce7fe1d9c6f4c
+  - url: https://storage.googleapis.com/helios-fleet-installers-2024/8fb2a90cdda97e9ea14d65751ff46d8e1a4dda1b37986078443ce7fe1d9c6f4c
+    hash_sha256: 8fb2a90cdda97e9ea14d65751ff46d8e1a4dda1b37986078443ce7fe1d9c6f4c
     post_install_script:
       path: ../lib/macos/scripts/crowdstrike-falcon-darwin-install-post
     self_service: false
