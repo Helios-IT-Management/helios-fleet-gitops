@@ -7,6 +7,7 @@ policies:
   name: '[Install software] 1Password'
   platform: darwin
   query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.1password.1password';
+  resolution: Open Fleet Desktop and install the latest 1Password from Self-service.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -14,6 +15,7 @@ policies:
   name: '[Install software] Google Chrome'
   platform: darwin
   query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.google.Chrome';
+  resolution: Open Fleet Desktop and install the latest Google Chrome from Self-service.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -21,6 +23,7 @@ policies:
   name: '[Install software] Slack'
   platform: darwin
   query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.tinyspeck.slackmacgap';
+  resolution: Open Fleet Desktop and install the latest Slack from Self-service.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -28,6 +31,7 @@ policies:
   name: '[Install software] Postman'
   platform: darwin
   query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.postmanlabs.mac';
+  resolution: Open Fleet Desktop and install the latest Postman from Self-service.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -35,6 +39,7 @@ policies:
   name: '[Install software] Linear'
   platform: darwin
   query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.linear';
+  resolution: Open Fleet Desktop and install the latest Linear from Self-service.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -42,6 +47,7 @@ policies:
   name: '[Install software] Cursor'
   platform: darwin
   query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.todesktop.230313mzl4w4u92';
+  resolution: Open Fleet Desktop and install the latest Cursor from Self-service.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: true
