@@ -133,6 +133,22 @@ software:
     self_service: true
     setup_experience: true
     slug: 1password/darwin
+  - categories:
+    - Productivity
+    self_service: true
+    slug: notion/darwin
+  - categories:
+    - Productivity
+    self_service: true
+    slug: google-drive/darwin
+  - categories:
+    - Productivity
+    self_service: true
+    slug: drawio/darwin
+  - categories:
+    - Utilities
+    self_service: true
+    slug: stats/darwin
   packages:
   - hash_sha256: 8fb2a90cdda97e9ea14d65751ff46d8e1a4dda1b37986078443ce7fe1d9c6f4c
     post_install_script:

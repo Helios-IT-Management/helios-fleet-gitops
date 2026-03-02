@@ -98,6 +98,42 @@ software:
       path: ../lib/macos/scripts/microsoft-word-darwin-install
     self_service: true
     slug: microsoft-word/darwin
+  - categories:
+    - Productivity
+    self_service: true
+    slug: microsoft-excel/darwin
+  - categories:
+    - Productivity
+    self_service: true
+    slug: microsoft-onenote/darwin
+  - categories:
+    - Productivity
+    self_service: true
+    slug: microsoft-outlook/darwin
+  - categories:
+    - Productivity
+    self_service: true
+    slug: microsoft-powerpoint/darwin
+  - categories:
+    - Design
+    self_service: true
+    slug: figma/darwin
+  - categories:
+    - Productivity
+    self_service: true
+    slug: google-drive/darwin
+  - categories:
+    - Productivity
+    self_service: true
+    slug: drawio/darwin
+  - categories:
+    - Utilities
+    self_service: true
+    slug: stats/darwin
+  - categories:
+    - Developer tools
+    self_service: true
+    slug: linear-linear/darwin
   packages:
 team_settings:
   secrets:
