@@ -1,4 +1,4 @@
-name: Workstations
+name: General
 policies:
 - calendar_events_enabled: false
   conditional_access_enabled: false
@@ -36,36 +36,14 @@ policies:
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
-  description: Policy triggers automatic install of Postman on each host that's missing
-    this software.
+  description: Policy triggers automatic install of Microsoft Word on each host that's
+    missing this software.
   install_software:
-    hash_sha256: 28ebd8b7754bd61640c9fe93fb7c21313ca11e09dd9e564ed1edcbd4ab43c6a1
-      # Postman (Postman v11.50.5 for macOS (arm64).zip) version 11.50.5
-  name: '[Install software] Postman'
+    hash_sha256: cfe42ce805a9f082a55a1f16bc4c69e8b9aa8626e0555b27540fb0985e4b3fdd
+      # Microsoft Word (Microsoft_Word_16.102.25110228_Installer.pkg) version 16.102.3
+  name: '[Install software] Microsoft Word'
   platform: darwin
-  query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.postmanlabs.mac';
-- calendar_events_enabled: false
-  conditional_access_enabled: false
-  critical: false
-  description: Policy triggers automatic install of Linear on each host that's missing
-    this software.
-  install_software:
-    hash_sha256: 3989bf97d625424fa15cb5adb9f3e068e31f066cdb17474633005e8ecdc8f054
-      # Linear (Linear 1.28.6 - Build 251002av7g3go28-arm64-mac.zip) version 1.28.6
-  name: '[Install software] Linear'
-  platform: darwin
-  query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.linear';
-- calendar_events_enabled: false
-  conditional_access_enabled: false
-  critical: false
-  description: Policy triggers automatic install of Cursor on each host that's missing
-    this software.
-  install_software:
-    hash_sha256: 2772ae955bb7b5b3d33c002f8b544f7499a3e00047c5111e8cdeab8c2a883327
-      # Cursor (Cursor-darwin-arm64.zip) version 2.0.60
-  name: '[Install software] Cursor'
-  platform: darwin
-  query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.todesktop.230313mzl4w4u92';
+  query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.microsoft.Word';
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: true
@@ -108,36 +86,19 @@ software:
     setup_experience: true
     slug: slack/darwin
   - categories:
-    - Developer tools
-    install_script:
-      path: ../lib/macos/scripts/cursor-darwin-install
-    self_service: true
-    slug: cursor/darwin
-  - categories:
-    - Developer tools
-    install_script:
-      path: ../lib/macos/scripts/linear-darwin-install
-    self_service: true
-    slug: linear-linear/darwin
-  - categories:
-    - Developer tools
-    install_script:
-      path: ../lib/macos/scripts/postman-darwin-install
-    self_service: true
-    setup_experience: true
-    slug: postman/darwin
-  - categories:
     - Productivity
     install_script:
       path: ../lib/macos/scripts/1password-darwin-install
     self_service: true
     setup_experience: true
     slug: 1password/darwin
+  - categories:
+    - Productivity
+    install_script:
+      path: ../lib/macos/scripts/microsoft-word-darwin-install
+    self_service: true
+    slug: microsoft-word/darwin
   packages:
-  - hash_sha256: 8fb2a90cdda97e9ea14d65751ff46d8e1a4dda1b37986078443ce7fe1d9c6f4c
-    post_install_script:
-      path: ../lib/macos/scripts/crowdstrike-falcon-darwin-install-post
-    self_service: false
 team_settings:
   secrets:
-  - secret: $FLEET_WORKSTATIONS_ENROLL_SECRET
+  - secret: $FLEET_GENERAL_ENROLL_SECRET

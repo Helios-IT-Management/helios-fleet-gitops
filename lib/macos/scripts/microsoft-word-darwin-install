@@ -26,5 +26,5 @@ cat << EOF > "$CHOICE_XML"
 
 EOF
 
-sudo installer -pkg "$TMPDIR"/Microsoft_Word_16.102.25110228_Installer.pkg -target / -applyChoiceChangesXML "$CHOICE_XML"
+sudo installer -pkg "$INSTALLER_PATH" -target / -applyChoiceChangesXML "$CHOICE_XML"
 
