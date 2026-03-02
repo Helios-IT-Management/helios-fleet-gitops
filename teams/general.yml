@@ -121,6 +121,14 @@ software:
     - Developer tools
     self_service: true
     slug: linear-linear/darwin
+  - categories:
+    - Developer tools
+    self_service: true
+    slug: claude/darwin
+  - categories:
+    - Developer tools
+    self_service: true
+    slug: chatgpt/darwin
   packages:
   - hash_sha256: 8fb2a90cdda97e9ea14d65751ff46d8e1a4dda1b37986078443ce7fe1d9c6f4c
     post_install_script:
