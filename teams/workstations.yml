@@ -58,17 +58,6 @@ policies:
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
-  description: Policy triggers automatic install of Docker Desktop on each host that's
-    missing this software.
-  install_software:
-    hash_sha256: 79f6b379d7c4558ae4dcb3bf42d78c8ffa78bc1089194808c747696855c9129c
-      # Docker (Docker.dmg) version 4.49.0
-  name: '[Install software] Docker Desktop'
-  platform: darwin
-  query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.docker.docker';
-- calendar_events_enabled: false
-  conditional_access_enabled: false
-  critical: false
   description: Policy triggers automatic install of Linear on each host that's missing
     this software.
   install_software:
@@ -145,16 +134,6 @@ software:
     self_service: true
     slug: microsoft-word/darwin
   packages:
-  - categories:
-    - Developer tools
-    hash_sha256: 79f6b379d7c4558ae4dcb3bf42d78c8ffa78bc1089194808c747696855c9129c
-      # Docker (Docker.dmg) version 4.49.0
-    install_script:
-      path: ../lib/macos/scripts/docker-darwin-install
-    self_service: true
-    uninstall_script:
-      path: ../lib/macos/scripts/docker-darwin-uninstall
-    url: https://desktop.docker.com/mac/main/arm64/208700/Docker.dmg
 team_settings:
   secrets:
   - secret: $FLEET_WORKSTATIONS_ENROLL_SECRET
