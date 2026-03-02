@@ -93,6 +93,7 @@ agent_options:
 controls:
   enable_disk_encryption: true
   macos_updates:
+    deadline: "2026-04-01"
     minimum_version: "15.3"
   scripts:
 software:
