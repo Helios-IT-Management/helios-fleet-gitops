@@ -102,7 +102,7 @@ software:
     self_service: true
     slug: microsoft-powerpoint/darwin
   - categories:
-    - Design
+    - Productivity
     self_service: true
     slug: figma/darwin
   - categories:
