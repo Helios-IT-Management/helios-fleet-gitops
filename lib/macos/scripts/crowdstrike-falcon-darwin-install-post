@@ -1,0 +1,12 @@
+#!/bin/bash
+CUSTOMER_ID="7b6179aebd9341c59dd59bd7583807a1-8B"
+FALCON_PATH="/Applications/Falcon.app/Contents/Resources/falconctl"
+
+sudo "$FALCON_PATH" license "$CUSTOMER_ID"
+
+if [ $? -eq 0 ]; then
+    echo "Activation completed"
+else
+    echo "Activation failed"
+    exit 1
+fi
