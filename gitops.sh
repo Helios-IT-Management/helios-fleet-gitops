@@ -27,6 +27,17 @@ if [ -n "${FLEET_MDM_SSO_METADATA:-}" ]; then
   FLEET_MDM_SSO_METADATA=$( sed '2,$s/^/        /' <<<  "${FLEET_MDM_SSO_METADATA}")
 fi
 
+# Write AWS credentials file for fleetctl's S3 client (GCS via S3-compatible API).
+# The AWS SDK checks ~/.aws/credentials before falling back to EC2 IMDS.
+if [ -n "${AWS_ACCESS_KEY_ID:-}" ] && [ -n "${AWS_SECRET_ACCESS_KEY:-}" ]; then
+  mkdir -p ~/.aws
+  cat > ~/.aws/credentials <<EOF
+[default]
+aws_access_key_id = ${AWS_ACCESS_KEY_ID}
+aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
+EOF
+fi
+
 if compgen -G "$FLEET_GITOPS_DIR"/teams/*.yml > /dev/null; then
   # Validate that every team has a unique name.
   # This is a limited check that assumes all team files contain the phrase: `name: <team_name>`
