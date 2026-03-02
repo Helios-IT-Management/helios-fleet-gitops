@@ -1,13 +1,118 @@
-# default.yml controls global settings and policies/queries that run on all hosts ("All teams").
-
+agent_options:
+  config:
+    decorators:
+      load:
+      - SELECT uuid AS host_uuid FROM system_info;
+      - SELECT hostname AS hostname FROM system_info;
+    options:
+      disable_distributed: false
+      distributed_interval: 10
+      distributed_plugin: tls
+      distributed_tls_max_attempts: 3
+      logger_tls_endpoint: /api/osquery/log
+      logger_tls_period: 10
+      pack_delimiter: /
+  overrides:
+labels:
+- description:
+  hosts:
+  - "12"
+  label_membership_type: manual
+  name: Subject
+org_settings:
+  features:
+    enable_host_users: true
+    enable_software_inventory: true
+  fleet_desktop:
+    transparency_url: https://fleetdm.com/transparency
+  host_expiry_settings:
+    host_expiry_enabled: false
+    host_expiry_window: 0
+  integrations:
+    google_calendar:
+    jira:
+    zendesk:
+  mdm:
+    end_user_authentication:
+      entity_id: https://mdm.fleet.heliosintel.ai
+      idp_name: GoogleWorkspace
+      metadata: $FLEET_MDM_SSO_METADATA
+  org_info:
+    contact_url: https://fleetdm.com/company/contact
+    org_logo_url: https://heliosintel.ai/logo.svg
+    org_name: Helios
+  secrets:
+  - secret: $FLEET_GLOBAL_ENROLL_SECRET
+  server_settings:
+    ai_features_disabled: false
+    enable_analytics: true
+    live_query_disabled: false
+    query_report_cap: 0
+    query_reports_disabled: false
+    scripts_disabled: false
+    server_url: $FLEET_URL
+  sso_settings:
+    enable_sso: false
+  webhook_settings:
+    activities_webhook:
+      enable_activities_webhook: false
+    failing_policies_webhook:
+      enable_failing_policies_webhook: false
+      host_batch_size: 0
+    host_status_webhook:
+      days_count: 0
+      enable_host_status_webhook: false
+      host_percentage: 0
+    interval: 24h0m0s
+    vulnerabilities_webhook:
+      enable_vulnerabilities_webhook: false
+      host_batch_size: 0
+controls:
 policies:
 queries:
-agent_options:
-controls:
-org_settings:
-  server_settings:
-    server_url: $FLEET_URL
-  org_info:
-    org_name: Fleet
-  secrets:
-    - secret: "$FLEET_GLOBAL_ENROLL_SECRET"
+- automations_enabled: false
+  description: Collects operating system information from all devices enrolled in Fleet
+  discard_data: false
+  interval: 300
+  logging: snapshot
+  name: Collect operating system information
+  observer_can_run: true
+  platform: darwin,linux,windows
+  query: SELECT * FROM os_version;
+- automations_enabled: false
+  discard_data: false
+  interval: 86400
+  labels_include_any:
+  - Subject
+  logging: snapshot
+  name: File List
+  observer_can_run: false
+  platform: darwin,windows,linux
+  query: |-
+    SELECT
+      path,
+      size
+    FROM
+      file
+    WHERE
+      path LIKE '/Users/%/%'
+      AND size > 1048576
+      AND type = 'regular'
+    ORDER BY
+      size DESC;
+- automations_enabled: false
+  discard_data: false
+  interval: 86400
+  logging: snapshot
+  name: Software List
+  observer_can_run: false
+  platform: darwin
+  query: |-
+    SELECT name, bundle_short_version AS version, 'Application (macOS)' AS type, 'apps' AS source
+    FROM apps
+    UNION
+    SELECT name, version, 'Package (Python)' AS type, 'python_packages' AS source
+    FROM python_packages
+    UNION
+    SELECT name, version, 'Package (Homebrew)' AS type, 'homebrew_packages' AS source
+    FROM homebrew_packages;
