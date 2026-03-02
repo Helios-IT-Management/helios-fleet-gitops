@@ -3,74 +3,49 @@ policies:
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
-  description: Policy triggers automatic install of 1Password on each host that's
-    missing this software.
-  install_software:
-    hash_sha256: b97b570df084f8215a397aa94842a1db1ee5cde60e86b1e81f4d7b373352da9f
-      # 1Password (1Password-8.10.82-aarch64.zip) version 8.10.82
+  description: Policy checks that 1Password is installed.
   name: '[Install software] 1Password'
   platform: darwin
   query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.1password.1password';
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
-  description: Policy triggers automatic install of Google Chrome on each host that's
-    missing this software.
-  install_software:
-    hash_sha256: ebd74e91e88abf71f5b667f32aec9c03ab462cf8972ec11850ca8e1e0abb8574
-      # Google Chrome (GoogleChrome.pkg) version latest
+  description: Policy checks that Google Chrome is installed.
   name: '[Install software] Google Chrome'
   platform: darwin
   query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.google.Chrome';
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
-  description: Policy triggers automatic install of Slack on each host that's missing
-    this software.
-  install_software:
-    hash_sha256: 08a1536308193a3a5602947ec1f2ae9d49f82ce4595d1c868dcd80d6c4dfbbbd
-      # Slack (Slack-4.44.65-macOS.dmg) version 4.44.65
+  description: Policy checks that Slack is installed.
   name: '[Install software] Slack'
   platform: darwin
   query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.tinyspeck.slackmacgap';
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
-  description: Policy triggers automatic install of Postman on each host that's missing
-    this software.
-  install_software:
-    hash_sha256: 28ebd8b7754bd61640c9fe93fb7c21313ca11e09dd9e564ed1edcbd4ab43c6a1
-      # Postman (Postman v11.50.5 for macOS (arm64).zip) version 11.50.5
+  description: Policy checks that Postman is installed.
   name: '[Install software] Postman'
   platform: darwin
   query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.postmanlabs.mac';
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
-  description: Policy triggers automatic install of Linear on each host that's missing
-    this software.
-  install_software:
-    hash_sha256: 3989bf97d625424fa15cb5adb9f3e068e31f066cdb17474633005e8ecdc8f054
-      # Linear (Linear 1.28.6 - Build 251002av7g3go28-arm64-mac.zip) version 1.28.6
+  description: Policy checks that Linear is installed.
   name: '[Install software] Linear'
   platform: darwin
   query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.linear';
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
-  description: Policy triggers automatic install of Cursor on each host that's missing
-    this software.
-  install_software:
-    hash_sha256: 2772ae955bb7b5b3d33c002f8b544f7499a3e00047c5111e8cdeab8c2a883327
-      # Cursor (Cursor-darwin-arm64.zip) version 2.0.60
+  description: Policy checks that Cursor is installed.
   name: '[Install software] Cursor'
   platform: darwin
   query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.todesktop.230313mzl4w4u92';
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: true
-  description: Policy triggers automatic install of CrowdStrike Falcon on each host
-    that's missing the sensor.
+  description: Policy checks that CrowdStrike Falcon is installed.
   install_software:
     hash_sha256: 8fb2a90cdda97e9ea14d65751ff46d8e1a4dda1b37986078443ce7fe1d9c6f4c
   name: '[Install software] Falcon Notifications (pkg)'
