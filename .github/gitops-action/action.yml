@@ -10,7 +10,7 @@ inputs:
     default: 'false'
   delete-other-teams:
     description: 'Whether to delete other teams in Fleet which are not part of the gitops config.'
-    default: 'true'
+    default: 'false'
 
 runs:
   using: "composite"
