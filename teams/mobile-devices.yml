@@ -9,9 +9,9 @@ controls:
   macos_settings:
     custom_settings:
       - path: ../lib/ios/configuration-profiles/passcode.mobileconfig
-  android_settings:
-    custom_settings:
-      - path: ../lib/android/configuration-profiles/security.json
+  # android_settings:
+  #   custom_settings:
+  #     - path: ../lib/android/configuration-profiles/security.json
 software:
 team_settings:
   secrets:
