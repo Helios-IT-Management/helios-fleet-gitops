@@ -6,7 +6,7 @@
       "passwordScope": "SCOPE_DEVICE"
     }
   ],
-  "maximumTimeToLock": 300000,
+  "maximumTimeToLock": "300000",
   "systemUpdate": {
     "type": "WINDOWED",
     "startMinutes": 0,

@@ -33,6 +33,11 @@ org_settings:
     jira:
     zendesk:
   mdm:
+    apple_business_manager:
+    - organization_name: Helios
+      macos_team: General
+      ios_team: Mobile devices
+      ipados_team: Mobile devices
     end_user_authentication:
       entity_id: https://mdm.fleet.heliosintel.ai
       idp_name: GoogleWorkspace
