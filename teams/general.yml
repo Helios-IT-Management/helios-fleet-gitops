@@ -41,6 +41,62 @@ policies:
   name: '[Install software] Falcon Notifications (pkg)'
   platform: darwin
   query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.crowdstrike.falcon.UserAgent';
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: true
+  description: Verifies that FileVault disk encryption is enabled.
+  name: Disk encryption enabled (FileVault)
+  platform: darwin
+  query: SELECT 1 FROM filevault_status WHERE status = 'FileVault is On.';
+  resolution: Contact IT to enable FileVault on this device.
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Verifies that the screen lock configuration profile is applied.
+  name: Screen lock enabled
+  platform: darwin
+  query: SELECT 1 FROM managed_policies WHERE domain = 'com.apple.screensaver' AND name = 'askForPassword' AND value = '1';
+  resolution: Contact IT -- the screen lock profile may not be installed.
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: true
+  description: Checks that the macOS firewall is enabled.
+  name: Firewall enabled
+  platform: darwin
+  query: SELECT 1 FROM alf WHERE global_state >= 1;
+  resolution: Enable the firewall in System Settings > Network > Firewall.
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: true
+  description: Checks that Gatekeeper is enabled to ensure only trusted software can run.
+  name: Gatekeeper enabled
+  platform: darwin
+  query: SELECT 1 FROM gatekeeper WHERE assessments_enabled = 1;
+  resolution: Enable Gatekeeper in System Settings > Privacy & Security.
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: true
+  description: Checks that System Integrity Protection (SIP) is enabled.
+  name: System Integrity Protection enabled
+  platform: darwin
+  query: SELECT 1 FROM sip_config WHERE config_flag = 'sip' AND enabled = 1;
+  resolution: Boot to Recovery Mode and run csrutil enable.
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Checks that automatic software update checking is enabled via MDM.
+  name: Automatic updates enabled
+  platform: darwin
+  query: SELECT 1 FROM managed_policies WHERE domain='com.apple.SoftwareUpdate' AND name='AutomaticCheckEnabled' AND value=1 LIMIT 1;
+  resolution: Contact IT -- the automatic updates configuration profile may not be installed.
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Verifies that all SSH keys on the device are encrypted with a passphrase.
+  name: SSH keys encrypted
+  platform: darwin
+  query: SELECT 1 WHERE NOT EXISTS (SELECT 1 FROM users CROSS JOIN user_ssh_keys USING (uid) WHERE encrypted='0');
+  resolution: Re-generate SSH keys with a passphrase using ssh-keygen -p.
 queries:
 agent_options:
 controls:
