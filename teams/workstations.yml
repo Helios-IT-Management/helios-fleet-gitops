@@ -274,6 +274,7 @@ controls:
     - path: ../lib/macos/scripts/brew-install-ffmpeg
     - path: ../lib/macos/scripts/brew-install-hadolint
     - path: ../lib/macos/scripts/brew-install-pandoc
+    - path: ../lib/macos/scripts/brew-upgrade-all
 software:
   fleet_maintained_apps:
   - categories:
