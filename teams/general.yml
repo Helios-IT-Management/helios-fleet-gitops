@@ -106,7 +106,7 @@ policies:
   query: SELECT 1 FROM file WHERE path = '/opt/homebrew/bin/brew' OR path = '/usr/local/bin/brew';
   resolution: Homebrew will be installed automatically.
   run_script:
-    path: ../lib/macos/scripts/homebrew-darwin-install
+    path: ../lib/macos/scripts/homebrew-darwin-install.sh
 queries:
 agent_options:
 controls:
@@ -125,7 +125,7 @@ controls:
       - path: ../lib/macos/configuration-profiles/software-update.mobileconfig
       - path: ../lib/macos/configuration-profiles/firewall.mobileconfig
   scripts:
-    - path: ../lib/macos/scripts/homebrew-darwin-install
+    - path: ../lib/macos/scripts/homebrew-darwin-install.sh
 software:
   fleet_maintained_apps:
   - categories:

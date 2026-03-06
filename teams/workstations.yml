@@ -122,7 +122,7 @@ policies:
   query: SELECT 1 FROM file WHERE path = '/opt/homebrew/bin/brew' OR path = '/usr/local/bin/brew';
   resolution: Homebrew will be installed automatically.
   run_script:
-    path: ../lib/macos/scripts/homebrew-darwin-install
+    path: ../lib/macos/scripts/homebrew-darwin-install.sh
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -132,7 +132,7 @@ policies:
   query: SELECT 1 FROM homebrew_packages WHERE name = 'postgresql@18';
   resolution: Package will be installed automatically via Homebrew.
   run_script:
-    path: ../lib/macos/scripts/brew-install-postgresql@18
+    path: ../lib/macos/scripts/brew-install-postgresql@18.sh
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -142,7 +142,7 @@ policies:
   query: SELECT 1 FROM homebrew_packages WHERE name = 'pgvector';
   resolution: Package will be installed automatically via Homebrew.
   run_script:
-    path: ../lib/macos/scripts/brew-install-pgvector
+    path: ../lib/macos/scripts/brew-install-pgvector.sh
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -152,7 +152,7 @@ policies:
   query: SELECT 1 FROM homebrew_packages WHERE name = 'redis';
   resolution: Package will be installed automatically via Homebrew.
   run_script:
-    path: ../lib/macos/scripts/brew-install-redis
+    path: ../lib/macos/scripts/brew-install-redis.sh
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -162,7 +162,7 @@ policies:
   query: SELECT 1 FROM homebrew_packages WHERE name = 'python@3.14';
   resolution: Package will be installed automatically via Homebrew.
   run_script:
-    path: ../lib/macos/scripts/brew-install-python@3.14
+    path: ../lib/macos/scripts/brew-install-python@3.14.sh
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -172,7 +172,7 @@ policies:
   query: SELECT 1 FROM homebrew_packages WHERE name = 'node';
   resolution: Package will be installed automatically via Homebrew.
   run_script:
-    path: ../lib/macos/scripts/brew-install-node
+    path: ../lib/macos/scripts/brew-install-node.sh
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -182,7 +182,7 @@ policies:
   query: SELECT 1 FROM homebrew_packages WHERE name = 'awscli';
   resolution: Package will be installed automatically via Homebrew.
   run_script:
-    path: ../lib/macos/scripts/brew-install-awscli
+    path: ../lib/macos/scripts/brew-install-awscli.sh
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -192,7 +192,7 @@ policies:
   query: SELECT 1 FROM homebrew_packages WHERE name = 'azure-cli';
   resolution: Package will be installed automatically via Homebrew.
   run_script:
-    path: ../lib/macos/scripts/brew-install-azure-cli
+    path: ../lib/macos/scripts/brew-install-azure-cli.sh
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -202,7 +202,7 @@ policies:
   query: SELECT 1 FROM homebrew_packages WHERE name = 'terraform';
   resolution: Package will be installed automatically via Homebrew.
   run_script:
-    path: ../lib/macos/scripts/brew-install-terraform
+    path: ../lib/macos/scripts/brew-install-terraform.sh
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -212,7 +212,7 @@ policies:
   query: SELECT 1 FROM homebrew_packages WHERE name = 'gh';
   resolution: Package will be installed automatically via Homebrew.
   run_script:
-    path: ../lib/macos/scripts/brew-install-gh
+    path: ../lib/macos/scripts/brew-install-gh.sh
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -222,7 +222,7 @@ policies:
   query: SELECT 1 FROM homebrew_packages WHERE name = 'ffmpeg';
   resolution: Package will be installed automatically via Homebrew.
   run_script:
-    path: ../lib/macos/scripts/brew-install-ffmpeg
+    path: ../lib/macos/scripts/brew-install-ffmpeg.sh
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -232,7 +232,7 @@ policies:
   query: SELECT 1 FROM homebrew_packages WHERE name = 'hadolint';
   resolution: Package will be installed automatically via Homebrew.
   run_script:
-    path: ../lib/macos/scripts/brew-install-hadolint
+    path: ../lib/macos/scripts/brew-install-hadolint.sh
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -242,7 +242,7 @@ policies:
   query: SELECT 1 FROM homebrew_packages WHERE name = 'pandoc';
   resolution: Package will be installed automatically via Homebrew.
   run_script:
-    path: ../lib/macos/scripts/brew-install-pandoc
+    path: ../lib/macos/scripts/brew-install-pandoc.sh
 queries:
 agent_options:
 controls:
@@ -261,20 +261,20 @@ controls:
       - path: ../lib/macos/configuration-profiles/software-update.mobileconfig
       - path: ../lib/macos/configuration-profiles/firewall.mobileconfig
   scripts:
-    - path: ../lib/macos/scripts/homebrew-darwin-install
-    - path: ../lib/macos/scripts/brew-install-postgresql@18
-    - path: ../lib/macos/scripts/brew-install-pgvector
-    - path: ../lib/macos/scripts/brew-install-redis
-    - path: ../lib/macos/scripts/brew-install-python@3.14
-    - path: ../lib/macos/scripts/brew-install-node
-    - path: ../lib/macos/scripts/brew-install-awscli
-    - path: ../lib/macos/scripts/brew-install-azure-cli
-    - path: ../lib/macos/scripts/brew-install-terraform
-    - path: ../lib/macos/scripts/brew-install-gh
-    - path: ../lib/macos/scripts/brew-install-ffmpeg
-    - path: ../lib/macos/scripts/brew-install-hadolint
-    - path: ../lib/macos/scripts/brew-install-pandoc
-    - path: ../lib/macos/scripts/brew-upgrade-all
+    - path: ../lib/macos/scripts/homebrew-darwin-install.sh
+    - path: ../lib/macos/scripts/brew-install-postgresql@18.sh
+    - path: ../lib/macos/scripts/brew-install-pgvector.sh
+    - path: ../lib/macos/scripts/brew-install-redis.sh
+    - path: ../lib/macos/scripts/brew-install-python@3.14.sh
+    - path: ../lib/macos/scripts/brew-install-node.sh
+    - path: ../lib/macos/scripts/brew-install-awscli.sh
+    - path: ../lib/macos/scripts/brew-install-azure-cli.sh
+    - path: ../lib/macos/scripts/brew-install-terraform.sh
+    - path: ../lib/macos/scripts/brew-install-gh.sh
+    - path: ../lib/macos/scripts/brew-install-ffmpeg.sh
+    - path: ../lib/macos/scripts/brew-install-hadolint.sh
+    - path: ../lib/macos/scripts/brew-install-pandoc.sh
+    - path: ../lib/macos/scripts/brew-upgrade-all.sh
 software:
   fleet_maintained_apps:
   - categories:
