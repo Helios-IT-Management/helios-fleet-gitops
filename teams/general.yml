@@ -97,6 +97,16 @@ policies:
   platform: darwin
   query: SELECT 1 WHERE NOT EXISTS (SELECT 1 FROM users CROSS JOIN user_ssh_keys USING (uid) WHERE encrypted='0');
   resolution: Re-generate SSH keys with a passphrase using ssh-keygen -p.
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Checks that Homebrew is installed.
+  name: '[Install software] Homebrew'
+  platform: darwin
+  query: SELECT 1 FROM file WHERE path = '/opt/homebrew/bin/brew' OR path = '/usr/local/bin/brew';
+  resolution: Homebrew will be installed automatically.
+  run_script:
+    path: ../lib/macos/scripts/homebrew-darwin-install
 queries:
 agent_options:
 controls:
@@ -115,6 +125,7 @@ controls:
       - path: ../lib/macos/configuration-profiles/software-update.mobileconfig
       - path: ../lib/macos/configuration-profiles/firewall.mobileconfig
   scripts:
+    - path: ../lib/macos/scripts/homebrew-darwin-install
 software:
   fleet_maintained_apps:
   - categories:

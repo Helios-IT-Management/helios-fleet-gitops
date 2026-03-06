@@ -113,6 +113,136 @@ policies:
   platform: darwin
   query: SELECT 1 WHERE NOT EXISTS (SELECT 1 FROM users CROSS JOIN user_ssh_keys USING (uid) WHERE encrypted='0');
   resolution: Re-generate SSH keys with a passphrase using ssh-keygen -p.
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Checks that Homebrew is installed.
+  name: '[Install software] Homebrew'
+  platform: darwin
+  query: SELECT 1 FROM file WHERE path = '/opt/homebrew/bin/brew' OR path = '/usr/local/bin/brew';
+  resolution: Homebrew will be installed automatically.
+  run_script:
+    path: ../lib/macos/scripts/homebrew-darwin-install
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Checks that postgresql@18 is installed via Homebrew.
+  name: '[Install brew package] postgresql@18'
+  platform: darwin
+  query: SELECT 1 FROM homebrew_packages WHERE name = 'postgresql@18';
+  resolution: Package will be installed automatically via Homebrew.
+  run_script:
+    path: ../lib/macos/scripts/brew-install-postgresql@18
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Checks that pgvector is installed via Homebrew.
+  name: '[Install brew package] pgvector'
+  platform: darwin
+  query: SELECT 1 FROM homebrew_packages WHERE name = 'pgvector';
+  resolution: Package will be installed automatically via Homebrew.
+  run_script:
+    path: ../lib/macos/scripts/brew-install-pgvector
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Checks that redis is installed via Homebrew.
+  name: '[Install brew package] redis'
+  platform: darwin
+  query: SELECT 1 FROM homebrew_packages WHERE name = 'redis';
+  resolution: Package will be installed automatically via Homebrew.
+  run_script:
+    path: ../lib/macos/scripts/brew-install-redis
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Checks that python@3.14 is installed via Homebrew.
+  name: '[Install brew package] python@3.14'
+  platform: darwin
+  query: SELECT 1 FROM homebrew_packages WHERE name = 'python@3.14';
+  resolution: Package will be installed automatically via Homebrew.
+  run_script:
+    path: ../lib/macos/scripts/brew-install-python@3.14
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Checks that node is installed via Homebrew.
+  name: '[Install brew package] node'
+  platform: darwin
+  query: SELECT 1 FROM homebrew_packages WHERE name = 'node';
+  resolution: Package will be installed automatically via Homebrew.
+  run_script:
+    path: ../lib/macos/scripts/brew-install-node
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Checks that awscli is installed via Homebrew.
+  name: '[Install brew package] awscli'
+  platform: darwin
+  query: SELECT 1 FROM homebrew_packages WHERE name = 'awscli';
+  resolution: Package will be installed automatically via Homebrew.
+  run_script:
+    path: ../lib/macos/scripts/brew-install-awscli
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Checks that azure-cli is installed via Homebrew.
+  name: '[Install brew package] azure-cli'
+  platform: darwin
+  query: SELECT 1 FROM homebrew_packages WHERE name = 'azure-cli';
+  resolution: Package will be installed automatically via Homebrew.
+  run_script:
+    path: ../lib/macos/scripts/brew-install-azure-cli
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Checks that terraform is installed via Homebrew.
+  name: '[Install brew package] terraform'
+  platform: darwin
+  query: SELECT 1 FROM homebrew_packages WHERE name = 'terraform';
+  resolution: Package will be installed automatically via Homebrew.
+  run_script:
+    path: ../lib/macos/scripts/brew-install-terraform
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Checks that gh is installed via Homebrew.
+  name: '[Install brew package] gh'
+  platform: darwin
+  query: SELECT 1 FROM homebrew_packages WHERE name = 'gh';
+  resolution: Package will be installed automatically via Homebrew.
+  run_script:
+    path: ../lib/macos/scripts/brew-install-gh
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Checks that ffmpeg is installed via Homebrew.
+  name: '[Install brew package] ffmpeg'
+  platform: darwin
+  query: SELECT 1 FROM homebrew_packages WHERE name = 'ffmpeg';
+  resolution: Package will be installed automatically via Homebrew.
+  run_script:
+    path: ../lib/macos/scripts/brew-install-ffmpeg
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Checks that hadolint is installed via Homebrew.
+  name: '[Install brew package] hadolint'
+  platform: darwin
+  query: SELECT 1 FROM homebrew_packages WHERE name = 'hadolint';
+  resolution: Package will be installed automatically via Homebrew.
+  run_script:
+    path: ../lib/macos/scripts/brew-install-hadolint
+- calendar_events_enabled: false
+  conditional_access_enabled: false
+  critical: false
+  description: Checks that pandoc is installed via Homebrew.
+  name: '[Install brew package] pandoc'
+  platform: darwin
+  query: SELECT 1 FROM homebrew_packages WHERE name = 'pandoc';
+  resolution: Package will be installed automatically via Homebrew.
+  run_script:
+    path: ../lib/macos/scripts/brew-install-pandoc
 queries:
 agent_options:
 controls:
@@ -131,6 +261,19 @@ controls:
       - path: ../lib/macos/configuration-profiles/software-update.mobileconfig
       - path: ../lib/macos/configuration-profiles/firewall.mobileconfig
   scripts:
+    - path: ../lib/macos/scripts/homebrew-darwin-install
+    - path: ../lib/macos/scripts/brew-install-postgresql@18
+    - path: ../lib/macos/scripts/brew-install-pgvector
+    - path: ../lib/macos/scripts/brew-install-redis
+    - path: ../lib/macos/scripts/brew-install-python@3.14
+    - path: ../lib/macos/scripts/brew-install-node
+    - path: ../lib/macos/scripts/brew-install-awscli
+    - path: ../lib/macos/scripts/brew-install-azure-cli
+    - path: ../lib/macos/scripts/brew-install-terraform
+    - path: ../lib/macos/scripts/brew-install-gh
+    - path: ../lib/macos/scripts/brew-install-ffmpeg
+    - path: ../lib/macos/scripts/brew-install-hadolint
+    - path: ../lib/macos/scripts/brew-install-pandoc
 software:
   fleet_maintained_apps:
   - categories:
