@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>EnableFirewall</key>
+			<true/>
+			<key>EnableStealthMode</key>
+			<false/>
+			<key>BlockAllIncoming</key>
+			<false/>
+			<key>AllowSigned</key>
+			<true/>
+			<key>AllowSignedApp</key>
+			<true/>
+			<key>PayloadDisplayName</key>
+			<string>Firewall</string>
+			<key>PayloadIdentifier</key>
+			<string>ai.heliosintel.fleet.firewall</string>
+			<key>PayloadType</key>
+			<string>com.apple.security.firewall</string>
+			<key>PayloadUUID</key>
+			<string>C3D4E5F6-A7B8-9012-CDEF-123456789012</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDisplayName</key>
+	<string>Firewall Settings</string>
+	<key>PayloadIdentifier</key>
+	<string>ai.heliosintel.fleet.firewall.profile</string>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>D4E5F6A7-B8C9-0123-DEFA-234567890123</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

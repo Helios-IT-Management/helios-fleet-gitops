@@ -128,6 +128,8 @@ controls:
       - path: ../lib/macos/configuration-profiles/crowdstrike-notification.mobileconfig
       - path: ../lib/macos/configuration-profiles/crowdstrike-service-management.mobileconfig
       - path: ../lib/macos/configuration-profiles/screenlock.mobileconfig
+      - path: ../lib/macos/configuration-profiles/software-update.mobileconfig
+      - path: ../lib/macos/configuration-profiles/firewall.mobileconfig
   scripts:
 software:
   fleet_maintained_apps:
@@ -167,6 +169,14 @@ software:
     - Productivity
     self_service: true
     slug: google-drive/darwin
+  - categories:
+    - Productivity
+    self_service: true
+    slug: microsoft-word/darwin
+  - categories:
+    - Productivity
+    self_service: true
+    slug: microsoft-excel/darwin
   - categories:
     - Productivity
     self_service: true

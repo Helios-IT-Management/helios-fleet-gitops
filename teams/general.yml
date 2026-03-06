@@ -112,6 +112,8 @@ controls:
       - path: ../lib/macos/configuration-profiles/crowdstrike-notification.mobileconfig
       - path: ../lib/macos/configuration-profiles/crowdstrike-service-management.mobileconfig
       - path: ../lib/macos/configuration-profiles/screenlock.mobileconfig
+      - path: ../lib/macos/configuration-profiles/software-update.mobileconfig
+      - path: ../lib/macos/configuration-profiles/firewall.mobileconfig
   scripts:
 software:
   fleet_maintained_apps:
