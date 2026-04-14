@@ -324,6 +324,10 @@ software:
   - categories:
     - Productivity
     self_service: true
+    slug: microsoft-powerpoint/darwin
+  - categories:
+    - Productivity
+    self_service: true
     slug: drawio/darwin
   - categories:
     - Utilities
