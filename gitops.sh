@@ -6,6 +6,23 @@
 # -o pipefail: Exit if any command in a pipeline fails.
 set -exuo pipefail
 
+# Retry a command up to 3 times with exponential backoff (5s, 10s, 20s).
+fleetctl_with_retry() {
+  local attempt=0
+  local max_attempts=3
+  local delay=5
+  until "$FLEETCTL" "$@"; do
+    attempt=$((attempt + 1))
+    if [ "$attempt" -ge "$max_attempts" ]; then
+      echo "fleetctl failed after $max_attempts attempts" >&2
+      return 1
+    fi
+    echo "fleetctl exited non-zero (attempt $attempt/$max_attempts), retrying in ${delay}s..." >&2
+    sleep "$delay"
+    delay=$((delay * 2))
+  done
+}
+
 FLEET_GITOPS_DIR="${FLEET_GITOPS_DIR:-.}"
 FLEET_GLOBAL_FILE="${FLEET_GLOBAL_FILE:-$FLEET_GITOPS_DIR/default.yml}"
 FLEETCTL="${FLEETCTL:-fleetctl}"
@@ -52,20 +69,20 @@ if [ "$FLEET_DELETE_OTHER_TEAMS" = true ]; then
   done
   args+=(--delete-other-teams)
 
-  $FLEETCTL gitops "${args[@]}" --dry-run
+  fleetctl_with_retry gitops "${args[@]}" --dry-run
   if [ "$FLEET_DRY_RUN_ONLY" = true ]; then
     exit 0
   fi
 
-  $FLEETCTL gitops "${args[@]}"
+  fleetctl_with_retry gitops "${args[@]}"
 else
   # Apply default and each team separately to avoid very large software batch
   # requests that can hit upstream timeouts/resets.
   if [ -f "$FLEET_GLOBAL_FILE" ]; then
-    $FLEETCTL gitops -f "$FLEET_GLOBAL_FILE" --dry-run
+    fleetctl_with_retry gitops -f "$FLEET_GLOBAL_FILE" --dry-run
   fi
   for team_file in "${team_files[@]}"; do
-    $FLEETCTL gitops -f "$team_file" --dry-run
+    fleetctl_with_retry gitops -f "$team_file" --dry-run
   done
 
   if [ "$FLEET_DRY_RUN_ONLY" = true ]; then
@@ -73,9 +90,9 @@ else
   fi
 
   if [ -f "$FLEET_GLOBAL_FILE" ]; then
-    $FLEETCTL gitops -f "$FLEET_GLOBAL_FILE"
+    fleetctl_with_retry gitops -f "$FLEET_GLOBAL_FILE"
   fi
   for team_file in "${team_files[@]}"; do
-    $FLEETCTL gitops -f "$team_file"
+    fleetctl_with_retry gitops -f "$team_file"
   done
 fi
