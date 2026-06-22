@@ -182,7 +182,7 @@ software:
   - categories:
     - Developer tools
     self_service: true
-    slug: linear-linear/darwin
+    slug: linear/darwin
   - categories:
     - Developer tools
     self_service: true
