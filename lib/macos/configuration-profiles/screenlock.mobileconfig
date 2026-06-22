@@ -29,6 +29,8 @@
 	<string>ai.heliosintel.screenlock</string>
 	<key>PayloadRemovalDisallowed</key>
 	<true/>
+	<key>PayloadScope</key>
+	<string>User</string>
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
