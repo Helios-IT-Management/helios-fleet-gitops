@@ -55,7 +55,7 @@ policies:
   description: Verifies that the screen lock configuration profile is applied.
   name: Screen lock enabled
   platform: darwin
-  query: SELECT 1 FROM managed_policies WHERE domain = 'com.apple.screensaver.user' AND name = 'askForPassword' AND value = '1';
+  query: SELECT 1 FROM managed_policies WHERE domain = 'com.apple.screensaver' AND name = 'askForPassword' AND value = '1';
   resolution: Contact IT -- the screen lock profile may not be installed.
 - calendar_events_enabled: false
   conditional_access_enabled: false
@@ -122,6 +122,7 @@ controls:
       - path: ../lib/macos/configuration-profiles/crowdstrike-notification.mobileconfig
       - path: ../lib/macos/configuration-profiles/crowdstrike-service-management.mobileconfig
       - path: ../lib/macos/configuration-profiles/screenlock.mobileconfig
+      - path: ../lib/macos/configuration-profiles/screenlock-password.mobileconfig
       - path: ../lib/macos/configuration-profiles/software-update.mobileconfig
       - path: ../lib/macos/configuration-profiles/firewall.mobileconfig
   scripts:
