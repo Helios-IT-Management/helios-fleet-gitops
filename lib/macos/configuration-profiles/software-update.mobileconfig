@@ -22,7 +22,7 @@
 			<key>PayloadType</key>
 			<string>com.apple.SoftwareUpdate</string>
 			<key>PayloadUUID</key>
-			<string>A1B2C3D4-E5F6-7890-ABCD-EF1234567890</string>
+			<string>E5F6A7B8-C9D0-1234-EFA1-345678901234</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 		</dict>
@@ -31,6 +31,8 @@
 	<string>Software Update Settings</string>
 	<key>PayloadIdentifier</key>
 	<string>ai.heliosintel.fleet.softwareupdate.profile</string>
+	<key>PayloadRemovalDisallowed</key>
+	<true/>
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>

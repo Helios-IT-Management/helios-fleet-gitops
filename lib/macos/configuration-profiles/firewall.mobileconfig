@@ -31,6 +31,8 @@
 	<string>Firewall Settings</string>
 	<key>PayloadIdentifier</key>
 	<string>ai.heliosintel.fleet.firewall.profile</string>
+	<key>PayloadRemovalDisallowed</key>
+	<true/>
 	<key>PayloadScope</key>
 	<string>System</string>
 	<key>PayloadType</key>
