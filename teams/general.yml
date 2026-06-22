@@ -123,6 +123,7 @@ controls:
       - path: ../lib/macos/configuration-profiles/crowdstrike-service-management.mobileconfig
       - path: ../lib/macos/configuration-profiles/screenlock.mobileconfig
       - path: ../lib/macos/configuration-profiles/screenlock-password.mobileconfig
+      - path: ../lib/macos/configuration-profiles/energy-saver.mobileconfig
       - path: ../lib/macos/configuration-profiles/software-update.mobileconfig
       - path: ../lib/macos/configuration-profiles/firewall.mobileconfig
   scripts:
