@@ -116,13 +116,11 @@ policies:
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
-  description: Checks that Homebrew is installed.
-  name: '[Install software] Homebrew'
+  description: Checks that helios-setup is installed and available for users to run.
+  name: helios-setup available
   platform: darwin
-  query: SELECT 1 FROM file WHERE path = '/opt/homebrew/bin/brew' OR path = '/usr/local/bin/brew';
-  resolution: Homebrew will be installed automatically.
-  run_script:
-    path: ../lib/macos/scripts/homebrew-darwin-install.sh
+  query: SELECT 1 FROM file WHERE path = '/usr/local/bin/helios-setup';
+  resolution: helios-setup will be installed automatically by MDM. If this persists, contact IT.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -263,20 +261,7 @@ controls:
       - path: ../lib/macos/configuration-profiles/software-update.mobileconfig
       - path: ../lib/macos/configuration-profiles/firewall.mobileconfig
   scripts:
-    - path: ../lib/macos/scripts/homebrew-darwin-install.sh
-    - path: ../lib/macos/scripts/brew-install-postgresql@18.sh
-    - path: ../lib/macos/scripts/brew-install-pgvector.sh
-    - path: ../lib/macos/scripts/brew-install-redis.sh
-    - path: ../lib/macos/scripts/brew-install-python@3.14.sh
-    - path: ../lib/macos/scripts/brew-install-node.sh
-    - path: ../lib/macos/scripts/brew-install-awscli.sh
-    - path: ../lib/macos/scripts/brew-install-azure-cli.sh
-    - path: ../lib/macos/scripts/brew-install-terraform.sh
-    - path: ../lib/macos/scripts/brew-install-gh.sh
-    - path: ../lib/macos/scripts/brew-install-ffmpeg.sh
-    - path: ../lib/macos/scripts/brew-install-hadolint.sh
-    - path: ../lib/macos/scripts/brew-install-pandoc.sh
-    - path: ../lib/macos/scripts/brew-upgrade-all.sh
+    - path: ../lib/macos/scripts/install-helios-setup.sh
 software:
   fleet_maintained_apps:
   - categories:

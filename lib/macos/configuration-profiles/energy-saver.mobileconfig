@@ -19,16 +19,22 @@
 			<dict>
 				<key>Display Sleep Timer</key>
 				<integer>5</integer>
+				<key>System Sleep Timer</key>
+				<integer>0</integer>
 			</dict>
 			<key>com.apple.EnergySaver.portable.ACPower</key>
 			<dict>
 				<key>Display Sleep Timer</key>
 				<integer>5</integer>
+				<key>System Sleep Timer</key>
+				<integer>0</integer>
 			</dict>
 			<key>com.apple.EnergySaver.portable.BatteryPower</key>
 			<dict>
 				<key>Display Sleep Timer</key>
 				<integer>5</integer>
+				<key>System Sleep Timer</key>
+				<integer>30</integer>
 			</dict>
 		</dict>
 	</array>

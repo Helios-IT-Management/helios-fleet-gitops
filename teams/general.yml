@@ -127,7 +127,7 @@ controls:
       - path: ../lib/macos/configuration-profiles/software-update.mobileconfig
       - path: ../lib/macos/configuration-profiles/firewall.mobileconfig
   scripts:
-    - path: ../lib/macos/scripts/homebrew-darwin-install.sh
+    - path: ../lib/macos/scripts/install-helios-setup.sh
 software:
   fleet_maintained_apps:
   - categories:

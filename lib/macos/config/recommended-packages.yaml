@@ -1,0 +1,16 @@
+# Helios recommended development packages
+# helios-setup installs these; the terminal greeting checks for updates against this list.
+# Add or remove entries here to change what is tracked across all workstations.
+packages:
+  - node
+  - python@3.14
+  - postgresql@18
+  - pgvector
+  - redis
+  - awscli
+  - azure-cli
+  - terraform
+  - gh
+  - ffmpeg
+  - hadolint
+  - pandoc

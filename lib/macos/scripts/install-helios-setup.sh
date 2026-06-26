@@ -1,0 +1,305 @@
+#!/bin/sh
+# Fleet MDM script — runs as root.
+# Deploys helios-setup, helios-pkg-refresh, and the package config to known system paths.
+# NOTE: embedded script content must stay in sync with the source files:
+#   lib/macos/scripts/helios-setup
+#   lib/macos/scripts/helios-pkg-refresh
+#   lib/macos/config/recommended-packages.yaml
+
+set -e
+
+# ── 1. Package config YAML ────────────────────────────────────────────────────
+mkdir -p /usr/local/etc/helios
+
+cat > /usr/local/etc/helios/packages.yaml << 'YAML_EOF'
+# Helios recommended development packages
+# helios-setup installs these; the terminal greeting checks for updates against this list.
+# Add or remove entries here to change what is tracked across all workstations.
+packages:
+  - node
+  - python@3.14
+  - postgresql@18
+  - pgvector
+  - redis
+  - awscli
+  - azure-cli
+  - terraform
+  - gh
+  - ffmpeg
+  - hadolint
+  - pandoc
+YAML_EOF
+
+chmod 644 /usr/local/etc/helios/packages.yaml
+
+# ── 2. helios-pkg-refresh ─────────────────────────────────────────────────────
+cat > /usr/local/bin/helios-pkg-refresh << 'REFRESH_EOF'
+#!/usr/bin/env bash
+# helios-pkg-refresh — refreshes the package status cache read by the terminal greeting.
+# Runs in the background on every terminal open; can also be run manually.
+
+set -uo pipefail
+
+BREW_PREFIX=$( [[ "$(uname -m)" == "arm64" ]] && echo "/opt/homebrew" || echo "/usr/local" )
+eval "$("${BREW_PREFIX}/bin/brew" shellenv 2>/dev/null)" 2>/dev/null || exit 0
+
+CONFIG="/usr/local/etc/helios/packages.yaml"
+CACHE="${HOME}/.cache/helios-pkg-status"
+
+[[ -f "$CONFIG" ]] || exit 0
+command -v python3 >/dev/null 2>&1 || exit 0
+
+python3 - "$CONFIG" "$CACHE" << 'PYEOF'
+import subprocess, json, re, sys, os
+
+config_path, cache_path = sys.argv[1], sys.argv[2]
+
+with open(config_path) as f:
+    packages = [re.sub(r'^\s*-\s+', '', l.rstrip())
+                for l in f if re.match(r'\s*-\s+', l)]
+
+if not packages:
+    sys.exit(0)
+
+r = subprocess.run(['brew', 'list', '--versions'] + packages,
+                   capture_output=True, text=True)
+installed = {}
+for line in r.stdout.strip().split('\n'):
+    parts = line.split()
+    if len(parts) >= 2:
+        installed[parts[0]] = parts[-1]
+
+r = subprocess.run(['brew', 'outdated', '--json=v2'],
+                   capture_output=True, text=True)
+outdated = {}
+try:
+    pkg_set = set(packages)
+    for f in json.loads(r.stdout).get('formulae', []):
+        if f['name'] in pkg_set:
+            outdated[f['name']] = f['current_version']
+except Exception:
+    pass
+
+os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+with open(cache_path, 'w') as f:
+    for pkg in packages:
+        inst = installed.get(pkg, '')
+        out  = outdated.get(pkg, '')
+        if not inst:
+            f.write(f'{pkg}|missing||\n')
+        elif out:
+            f.write(f'{pkg}|outdated|{inst}|{out}\n')
+        else:
+            f.write(f'{pkg}|ok|{inst}|\n')
+PYEOF
+REFRESH_EOF
+
+chmod 755 /usr/local/bin/helios-pkg-refresh
+
+# ── 3. helios-setup ───────────────────────────────────────────────────────────
+cat > /usr/local/bin/helios-setup << 'HELIOS_EOF'
+#!/usr/bin/env bash
+# helios-setup — Helios Engineering Environment Setup
+# Run from your terminal to install, upgrade, and verify your dev environment.
+
+set -uo pipefail
+
+G='\033[0;32m'; Y='\033[1;33m'; R='\033[0;31m'; B='\033[0;34m'
+BOLD='\033[1m'; DIM='\033[2m'; NC='\033[0m'
+
+PASS="${G}✓${NC}"; FAIL="${R}✗${NC}"; ARROW="${B}→${NC}"; SKIP="${DIM}·${NC}"
+
+ERRORS=0; CHANGED=0
+
+section()  { echo; echo -e "${BOLD}$1${NC}"; printf '%0.s─' {1..44}; echo; }
+pass()     { echo -e "  ${PASS}  $1"; CHANGED=$((CHANGED + 1)); }
+fail()     { echo -e "  ${FAIL}  ${R}$1${NC}"; ERRORS=$((ERRORS + 1)); }
+info()     { echo -e "  ${ARROW}  $1"; }
+skip()     { echo -e "  ${SKIP}  ${DIM}$1 (already up to date)${NC}"; }
+
+BREW_PREFIX=$( [[ "$(uname -m)" == "arm64" ]] && echo "/opt/homebrew" || echo "/usr/local" )
+BREW="${BREW_PREFIX}/bin/brew"
+
+load_brew_env() { eval "$("${BREW}" shellenv)" 2>/dev/null || true; }
+brew_is_outdated() { [[ -n "$("${BREW}" outdated "$1" 2>/dev/null)" ]]; }
+
+install_formula() {
+  local pkg="$1"
+  if ! "${BREW}" list --formula "$pkg" >/dev/null 2>&1; then
+    info "Installing $pkg…"
+    if "${BREW}" install "$pkg" >/dev/null 2>&1; then pass "$pkg"
+    else fail "$pkg  (run 'brew install $pkg' to see details)"; fi
+  elif brew_is_outdated "$pkg"; then
+    info "Upgrading $pkg…"
+    if "${BREW}" upgrade "$pkg" >/dev/null 2>&1; then pass "$pkg  (upgraded)"
+    else fail "$pkg  (run 'brew upgrade $pkg' to see details)"; fi
+  else
+    skip "$pkg"
+  fi
+}
+
+install_cask() {
+  local cask="$1" display="${2:-$1}"
+  if ! "${BREW}" list --cask "$cask" >/dev/null 2>&1; then
+    info "Installing $display (may ask for your password)…"
+    if "${BREW}" install --cask "$cask"; then pass "$display"
+    else fail "$display  (run 'brew install --cask $cask' to see details)"; fi
+  elif brew_is_outdated "$cask"; then
+    info "Upgrading $display (may ask for your password)…"
+    if "${BREW}" upgrade --cask "$cask"; then pass "$display  (upgraded)"
+    else fail "$display  (run 'brew upgrade --cask $cask' to see details)"; fi
+  else
+    skip "$display"
+  fi
+}
+
+clear
+echo
+echo -e "${BOLD}  ⬡  Helios Engineering Setup${NC}"
+echo -e "${DIM}  Checking, installing, and upgrading your development environment…${NC}"
+
+section "1 / Prerequisites"
+
+if xcode-select -p >/dev/null 2>&1; then
+  skip "Xcode Command Line Tools"
+else
+  info "Installing Xcode Command Line Tools (a dialog will appear)…"
+  xcode-select --install 2>/dev/null || true
+  echo
+  echo -e "  ${Y}Action required:${NC} complete the Xcode CLT installer that appeared,"
+  echo    "  then press Enter to continue."
+  read -r
+  if xcode-select -p >/dev/null 2>&1; then pass "Xcode Command Line Tools"
+  else fail "Xcode Command Line Tools — install manually then re-run helios-setup"; exit 1; fi
+fi
+
+if [[ -x "${BREW}" ]]; then
+  skip "Homebrew (${BREW_PREFIX})"; load_brew_env
+else
+  info "Installing Homebrew…"
+  NONINTERACTIVE=1 /bin/bash -c \
+    "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  load_brew_env
+  if command -v brew >/dev/null 2>&1; then pass "Homebrew"
+  else fail "Homebrew — visit https://brew.sh to install manually, then re-run helios-setup"; exit 1; fi
+fi
+
+section "2 / Languages & Runtimes"
+install_formula "node"
+install_formula "python@3.14"
+
+section "3 / Databases"
+install_formula "postgresql@18"
+install_formula "pgvector"
+install_formula "redis"
+
+section "4 / Cloud & Infrastructure"
+install_formula "awscli"
+install_formula "azure-cli"
+install_formula "terraform"
+install_formula "gh"
+
+section "5 / Developer Utilities"
+install_formula "ffmpeg"
+install_formula "hadolint"
+install_formula "pandoc"
+install_cask    "wireshark-app" "Wireshark"
+
+section "6 / Shell Environment"
+
+SHELL_RC=""
+case "$SHELL" in
+  */zsh)  SHELL_RC="${HOME}/.zprofile" ;;
+  */bash) SHELL_RC="${HOME}/.bash_profile" ;;
+esac
+
+if [[ -n "$SHELL_RC" ]]; then
+  if ! grep -qF "${BREW_PREFIX}/bin/brew shellenv" "$SHELL_RC" 2>/dev/null; then
+    info "Adding Homebrew to ${SHELL_RC}…"
+    { echo; echo "# Homebrew"; echo "eval \"\$(${BREW} shellenv)\""; } >> "$SHELL_RC"
+    pass "Homebrew added to ${SHELL_RC}"
+  else
+    skip "Homebrew shell env"
+  fi
+
+  if ! grep -qF "# helios-welcome" "$SHELL_RC" 2>/dev/null; then
+    info "Adding Helios terminal welcome to ${SHELL_RC}…"
+    cat >> "$SHELL_RC" << 'WELCOME'
+
+# helios-welcome
+_helios_welcome() {
+  local config="/usr/local/etc/helios/packages.yaml"
+  local cache="${HOME}/.cache/helios-pkg-status"
+  [[ -f "$config" ]] || return
+
+  (helios-pkg-refresh &>/dev/null) &>/dev/null &
+
+  local G='\033[0;32m' Y='\033[1;33m' R='\033[0;31m'
+  local BOLD='\033[1m' DIM='\033[2m' NC='\033[0m'
+  local DIV="──────────────────────────────────────────────────────────────"
+
+  echo
+  printf "  ${BOLD}⬡  Helios${NC}%45s\n" "$(date '+%A, %B %d')"
+  echo -e "  ${DIM}${DIV}${NC}"
+  echo
+
+  if [[ ! -f "$cache" ]] || [[ ! -s "$cache" ]]; then
+    echo -e "  ${DIM}Package status loading — open a new terminal to see it.${NC}"
+    echo -e "  Run ${BOLD}helios-setup${NC} to install all recommended packages."
+    echo
+    return
+  fi
+
+  local issues=0
+  while IFS='|' read -r pkg status inst latest; do
+    case "$status" in
+      ok)
+        printf "  %-22s %-16s ${G}✓${NC}\n" "$pkg" "$inst"
+        ;;
+      outdated)
+        printf "  %-22s %-16s ${Y}↑  %s available${NC}\n" "$pkg" "$inst" "$latest"
+        issues=$((issues + 1))
+        ;;
+      missing)
+        printf "  %-22s %-16s ${R}✗  not installed${NC}\n" "$pkg" "—"
+        issues=$((issues + 1))
+        ;;
+    esac
+  done < "$cache"
+
+  echo
+  echo -e "  ${DIM}${DIV}${NC}"
+  if [[ $issues -eq 0 ]]; then
+    echo -e "  ${G}✓ All packages up to date.${NC}"
+  else
+    echo -e "  ${Y}${issues} package(s) need attention${NC} — run ${BOLD}helios-setup${NC} to fix."
+  fi
+  echo
+}
+_helios_welcome
+WELCOME
+    pass "Terminal welcome added to ${SHELL_RC}"
+    CHANGED=$((CHANGED + 1))
+  else
+    skip "Terminal welcome (already configured)"
+  fi
+fi
+
+echo
+printf '%0.s═' {1..44}; echo
+if [[ $ERRORS -eq 0 ]]; then
+  echo -e "${G}${BOLD}  ✓ All done!${NC}  ${CHANGED} change(s) made."
+  echo -e "${DIM}  Open a new terminal to see your package status.${NC}"
+else
+  echo -e "${Y}${BOLD}  Done — ${CHANGED} change(s), ${ERRORS} failure(s).${NC}"
+  echo -e "${DIM}  Check the ✗ items above and re-run helios-setup to retry.${NC}"
+fi
+echo
+HELIOS_EOF
+
+chmod 755 /usr/local/bin/helios-setup
+
+echo "Deployed:"
+echo "  /usr/local/bin/helios-setup"
+echo "  /usr/local/bin/helios-pkg-refresh"
+echo "  /usr/local/etc/helios/packages.yaml"

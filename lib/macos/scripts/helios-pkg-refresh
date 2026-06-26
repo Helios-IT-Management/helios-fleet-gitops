@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# helios-pkg-refresh — refreshes the package status cache read by the terminal greeting.
+# Runs in the background on every terminal open; can also be run manually.
+# Requires: brew in PATH, python3 in PATH (installed via helios-setup).
+# NOTE: this file is also embedded in install-helios-setup.sh — keep them in sync.
+
+set -uo pipefail
+
+BREW_PREFIX=$( [[ "$(uname -m)" == "arm64" ]] && echo "/opt/homebrew" || echo "/usr/local" )
+eval "$("${BREW_PREFIX}/bin/brew" shellenv 2>/dev/null)" 2>/dev/null || exit 0
+
+CONFIG="/usr/local/etc/helios/packages.yaml"
+CACHE="${HOME}/.cache/helios-pkg-status"
+
+[[ -f "$CONFIG" ]] || exit 0
+command -v python3 >/dev/null 2>&1 || exit 0
+
+python3 - "$CONFIG" "$CACHE" << 'PYEOF'
+import subprocess, json, re, sys, os
+
+config_path, cache_path = sys.argv[1], sys.argv[2]
+
+with open(config_path) as f:
+    packages = [re.sub(r'^\s*-\s+', '', l.rstrip())
+                for l in f if re.match(r'\s*-\s+', l)]
+
+if not packages:
+    sys.exit(0)
+
+# Installed versions — one call for all packages
+r = subprocess.run(['brew', 'list', '--versions'] + packages,
+                   capture_output=True, text=True)
+installed = {}
+for line in r.stdout.strip().split('\n'):
+    parts = line.split()
+    if len(parts) >= 2:
+        installed[parts[0]] = parts[-1]
+
+# Outdated packages with available versions
+r = subprocess.run(['brew', 'outdated', '--json=v2'],
+                   capture_output=True, text=True)
+outdated = {}
+try:
+    pkg_set = set(packages)
+    for f in json.loads(r.stdout).get('formulae', []):
+        if f['name'] in pkg_set:
+            outdated[f['name']] = f['current_version']
+except Exception:
+    pass
+
+os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+with open(cache_path, 'w') as f:
+    for pkg in packages:
+        inst = installed.get(pkg, '')
+        out  = outdated.get(pkg, '')
+        if not inst:
+            f.write(f'{pkg}|missing||\n')
+        elif out:
+            f.write(f'{pkg}|outdated|{inst}|{out}\n')
+        else:
+            f.write(f'{pkg}|ok|{inst}|\n')
+PYEOF
