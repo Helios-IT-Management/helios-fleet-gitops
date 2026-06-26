@@ -128,9 +128,7 @@ policies:
   name: '[Install brew package] postgresql@18'
   platform: darwin
   query: SELECT 1 FROM homebrew_packages WHERE name = 'postgresql@18';
-  resolution: Package will be installed automatically via Homebrew.
-  run_script:
-    path: ../lib/macos/scripts/brew-install-postgresql@18.sh
+  resolution: Run helios-setup in your terminal to install missing packages.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -138,9 +136,7 @@ policies:
   name: '[Install brew package] pgvector'
   platform: darwin
   query: SELECT 1 FROM homebrew_packages WHERE name = 'pgvector';
-  resolution: Package will be installed automatically via Homebrew.
-  run_script:
-    path: ../lib/macos/scripts/brew-install-pgvector.sh
+  resolution: Run helios-setup in your terminal to install missing packages.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -148,9 +144,7 @@ policies:
   name: '[Install brew package] redis'
   platform: darwin
   query: SELECT 1 FROM homebrew_packages WHERE name = 'redis';
-  resolution: Package will be installed automatically via Homebrew.
-  run_script:
-    path: ../lib/macos/scripts/brew-install-redis.sh
+  resolution: Run helios-setup in your terminal to install missing packages.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -158,9 +152,7 @@ policies:
   name: '[Install brew package] python@3.14'
   platform: darwin
   query: SELECT 1 FROM homebrew_packages WHERE name = 'python@3.14';
-  resolution: Package will be installed automatically via Homebrew.
-  run_script:
-    path: ../lib/macos/scripts/brew-install-python@3.14.sh
+  resolution: Run helios-setup in your terminal to install missing packages.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -168,9 +160,7 @@ policies:
   name: '[Install brew package] node'
   platform: darwin
   query: SELECT 1 FROM homebrew_packages WHERE name = 'node';
-  resolution: Package will be installed automatically via Homebrew.
-  run_script:
-    path: ../lib/macos/scripts/brew-install-node.sh
+  resolution: Run helios-setup in your terminal to install missing packages.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -178,9 +168,7 @@ policies:
   name: '[Install brew package] awscli'
   platform: darwin
   query: SELECT 1 FROM homebrew_packages WHERE name = 'awscli';
-  resolution: Package will be installed automatically via Homebrew.
-  run_script:
-    path: ../lib/macos/scripts/brew-install-awscli.sh
+  resolution: Run helios-setup in your terminal to install missing packages.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -188,9 +176,7 @@ policies:
   name: '[Install brew package] azure-cli'
   platform: darwin
   query: SELECT 1 FROM homebrew_packages WHERE name = 'azure-cli';
-  resolution: Package will be installed automatically via Homebrew.
-  run_script:
-    path: ../lib/macos/scripts/brew-install-azure-cli.sh
+  resolution: Run helios-setup in your terminal to install missing packages.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -198,9 +184,7 @@ policies:
   name: '[Install brew package] terraform'
   platform: darwin
   query: SELECT 1 FROM homebrew_packages WHERE name = 'terraform';
-  resolution: Package will be installed automatically via Homebrew.
-  run_script:
-    path: ../lib/macos/scripts/brew-install-terraform.sh
+  resolution: Run helios-setup in your terminal to install missing packages.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -208,9 +192,7 @@ policies:
   name: '[Install brew package] gh'
   platform: darwin
   query: SELECT 1 FROM homebrew_packages WHERE name = 'gh';
-  resolution: Package will be installed automatically via Homebrew.
-  run_script:
-    path: ../lib/macos/scripts/brew-install-gh.sh
+  resolution: Run helios-setup in your terminal to install missing packages.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -218,9 +200,7 @@ policies:
   name: '[Install brew package] ffmpeg'
   platform: darwin
   query: SELECT 1 FROM homebrew_packages WHERE name = 'ffmpeg';
-  resolution: Package will be installed automatically via Homebrew.
-  run_script:
-    path: ../lib/macos/scripts/brew-install-ffmpeg.sh
+  resolution: Run helios-setup in your terminal to install missing packages.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -228,9 +208,7 @@ policies:
   name: '[Install brew package] hadolint'
   platform: darwin
   query: SELECT 1 FROM homebrew_packages WHERE name = 'hadolint';
-  resolution: Package will be installed automatically via Homebrew.
-  run_script:
-    path: ../lib/macos/scripts/brew-install-hadolint.sh
+  resolution: Run helios-setup in your terminal to install missing packages.
 - calendar_events_enabled: false
   conditional_access_enabled: false
   critical: false
@@ -238,9 +216,7 @@ policies:
   name: '[Install brew package] pandoc'
   platform: darwin
   query: SELECT 1 FROM homebrew_packages WHERE name = 'pandoc';
-  resolution: Package will be installed automatically via Homebrew.
-  run_script:
-    path: ../lib/macos/scripts/brew-install-pandoc.sh
+  resolution: Run helios-setup in your terminal to install missing packages.
 queries:
 agent_options:
 controls:
